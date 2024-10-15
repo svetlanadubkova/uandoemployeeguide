@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>underage & overserved - assignment guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-color: #ffffff;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .header, .footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            z-index: 1000;
+            text-align: center;
+            font-size: 1vw;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .header {
+            top: 0;
+        }
+        
+        .footer {
+            bottom: 0;
+        }
+        
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px 10%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #intro {
+            position: relative;
+        }
+        
+        #intro-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .intro-content {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+        }
+        
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5vw;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s, transform 1s;
+            text-transform: lowercase;
+            font-weight: 400;
+        }
+        
+        .welcome-line {
+            width: 0;
+            height: 1px;
+            background-color: var(--text-color);
+            transition: width 1.5s ease-out;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-line.visible {
+            width: 100%;
+        }
+        
+        .content {
+            font-size: 1.2vw;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s, transform 1s;
+            transition-delay: 0.3s;
+            max-width: 100%;
+        }
+        
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8vw;
+            margin: 40px 0;
+            padding: 20px 0;
+            border-top: 1px solid var(--accent-color);
+            border-bottom: 1px solid var(--accent-color);
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 1s, transform 1s;
+            transition-delay: 0.6s;
+            font-weight: 400;
+        }
+        
+        .values-list, .practice-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .values-list li, .practice-list li {
+            margin-bottom: 40px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .values-list li:before, .practice-list li:before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.5em;
+        }
+        
+        .values-list h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2vw;
+            margin-bottom: 10px;
+        }
+        
+        .formula-section {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        .formula-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .formula-item {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5vw;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #000000;
+            transition: all 0.3s ease;
+        }
+        
+        .formula-item:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        
+        .formula-separator {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5vw;
+            font-weight: 700;
+        }
+        
+        .formula-result {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5vw;
+            margin-top: 40px;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .formula-result::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #000000;
+            transition: width 1s ease-out, left 1s ease-out;
+        }
+        
+        .formula-result.visible::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        .love-thy-neighbor {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5vw;
+            font-weight: 400;
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .smile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .smile-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4vw;
+            margin-bottom: 30px;
+        }
+        
+        .smile-content {
+            font-size: 1.5vw;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+        
+        .smile-highlight {
+            font-size: 2vw;
+            font-weight: 700;
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid var(--accent-color);
+        }
+        
+        .smile-list {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+        
+        .smile-list li {
+            margin-bottom: 20px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .smile-list li:before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+        
+        .assignment-details {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .assignment-details h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3vw;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 10px;
+        }
+        
+        .assignment-details p {
+            font-size: 1.2vw;
+            margin-bottom: 15px;
+        }
+        
+        .assignment-details ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .assignment-details li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .assignment-details li:before {
+            content: '→';
+            position: absolute;
+            left: -20px;
+            color: #000000;
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 9vw;
+            }
+            .content, .values-list li, .practice-list li {
+                font-size: 4vw;
+            }
+            .quote {
+                font-size: 5vw;
+            }
+            .formula-item, .formula-separator {
+                font-size: 6vw;
+            }
+            .formula-result {
+                font-size: 8vw;
+            }
+            .love-thy-neighbor {
+                font-size: 6vw;
+            }
+            .values-list h3 {
+                font-size: 5vw;
+            }
+            .smile-title {
+                font-size: 8vw;
+            }
+            .smile-content {
+                font-size: 4vw;
+            }
+            .smile-highlight {
+                font-size: 5vw;
+            }
+            .assignment-details h2 {
+                font-size: 7vw;
+            }
+            .assignment-details p {
+                font-size: 4vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        underage & overserved - assignment guide
+    </header>
+
+    <section class="section" id="intro">
+        <video id="intro-video" autoplay loop muted playsinline>
+            <source src="https://i.imgur.com/S9RBcnC.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="intro-content">
+            <h1 class="title">welcome</h1>
+            <div class="welcome-line"></div>
+            <div class="content">
+                <p>As a member of the U&O team, you're not just an employee – you're an ambassador of our brand and values. This guide will help you understand our philosophy and how to embody the Underage & Overserved spirit in everything you do.</p>
+            </div>
+            <blockquote class="quote">"Those who dance are considered insane by those who cannot hear the music."</blockquote>
+        </div>
+    </section>
+
+    <section class="section" id="assignment">
+        <div class="assignment-details">
+            <h2>assignment details</h2>
+            <p><strong>date:</strong> Sunday, October 21</p>
+            <p><strong>time:</strong> 3:30 PM - 7:30 PM</p>
+            <p><strong>location:</strong> 147-149 East 26th Street #203, New York, 10010</p>
+            <p><strong>event:</strong> Sukkah/housewarming party (Jewish harvest festival with autumn theme)</p>
+            <p><strong>guest Count:</strong> 20-25 people</p>
+            <p><strong>attire:</strong> BLACK CASUAL - NOTHING TOO FORMAL</p>
+            <p><strong>pay Rate:</strong> $40/hr</p>
+            <p><strong>tasks:</strong></p>
+            <ul>
+                <li>Prepare and serve drinks (including hot apple cider, with or without bourbon)</li>
+                <li>Keep the buffet stocked</li>
+                <li>Help with guests' needs</li>
+                <li>Assist with setup (3:30 PM - 4:30 PM) and cleanup (6:30 PM - 7:30 PM)</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section" id="values">
+        <h2 class="title">our values</h2>
+        <div class="content">
+            <ul class="values-list">
+                <li>
+                    <h3>love thy neighbor, not thy in-group</h3>
+                    <p>Extending compassion beyond our immediate circles.</p>
+                </li>
+                <li>
+                    <h3>warm and open</h3>
+                    <p>We assume trust and openness. We value earnestness and reject cynicism.</p>
+                </li>
+                <li>
+                    <h3>bold & non-judgmental</h3>
+                    <p>We value risk-taking and avoid group-think.</p>
+                </li>
+                <li>
+                    <h3>elevated yet approachable</h3>
+                    <p>Sophisticated service with a friendly, down-to-earth attitude.</p>
+                </li>
+                <li>
+                    <h3>polished yet playful</h3>
+                    <p>Delivering excellence with a dash of fun and spontaneity. We keep things professional but we also keep things light. If things go off plan, we'll deal with it with a smile and sense of humor.</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section formula-section" id="formula">
+        <h2 class="title">the formula</h2>
+        <div class="content">
+            <p>Our job is never just to "do x task" – it's to ensure that people are having a good time AKA love thy neighbor. We achieve this through our core principles:</p>
+        </div>
+        <div class="formula-container">
+            <div class="formula-item">punctual</div>
+            <div class="formula-separator">+</div>
+            <div class="formula-item">kind</div>
+            <div class="formula-separator">+</div>
+            <div class="formula-item">reliable</div>
+            <div class="formula-separator">=</div>
+        </div>
+        <div class="formula-result">guaranteed success</div>
+        <blockquote class="quote">"The only way to do great work is to love what you do." —Steve Jobs</blockquote>
+    </section>
+
+    <section class="section" id="practice">
+        <h2 class="title">our practice</h2>
+        <div class="content">
+            <ul class="practice-list">
+                <li><strong>we're punctual:</strong> we look up the address and commute ahead of time and we always work in a <b>minimum 20-minute buffer</b> into our travel time.
+                <li><strong>we smile:</strong> we know that <b>first impressions are everything</b> & just one smile can make the difference between a good hospitality experience or a bad one.</li>
+                <li><strong>we clarify:</strong> clear is kind. we repeat any instructions given to us in our own words so we and the client can be sure we're on the same page!</li>
+                <li><strong>we're attentive:</strong> we anticipate needs before they arise, always keeping an eye on the bigger picture.</li>
+                <li><strong>we're adaptable and high-agency:</strong> every event is unique, and we pride ourselves on our ability to think on our feet, be proactively helpful and adjust to any situation.</li>
+                <li><strong>we keep things light:</strong> remember, it's never that serious (except when it is). We maintain professionalism while injecting fun and spontaneity into our work.</li>
+            </ul>
+        </div>
+   
+        <blockquote class="quote">"The best way to find yourself is to lose yourself in the service of others."</blockquote>
+    </section>
+
+    <section class="section" id="smile">
+        <h2 class="title">the power of a smile: kindness is the secret ingredient—use it liberally.</h2>
+        <div class="smile-section">
+            <h3 class="smile-title">You set the mood—make it warm and welcoming. Be the reason someone enjoys their night.</h3>
+            <div class="smile-content">
+                <p class="smile-highlight">"Hi! So nice to meet you!" :)</p>
+                <p>Our smile is our signature, our welcome mat, and our secret weapon.</p>
+                <ul class="smile-list">
+                    <li>We smile at <em>all</em> of our guests, without exception.</li>
+                    <li>We ensure everyone is greeted with a warm "WELCOME!" or "HELLO! Can I take your coat or get you a drink?"</li>
+                    <li>We ensure everyone has a drink in hand - a symbol of our attentiveness.</li>
+                    <li>We treat everybody like a friend, not a stranger - warmth is our default setting.</li>
+                </ul>
+                <p>Your smile sets the tone for the entire event. It's the first step in creating an atmosphere of warmth, welcome, and fun.</p>
+            </div>
+        </div>
+        <blockquote class="quote">"A warm smile is the universal language of kindness." —William Arthur Ward</blockquote>
+    </section>
+
+    <section class="section" id="name">
+        <h2 class="title">about our name</h2>
+        <div class="content">
+            <p>Our company name often sparks curiosity. When asked about it, here's how you might address it:</p>
+            <blockquote class="quote">"Playful name, serious service. Can I get you a drink?"</blockquote>
+            <p>There is no literal intent to over-serve minors :-) Some people are annoying about it and that's fine; they're not our target market.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>inquiries: 💌 info@underageandoverserved.com</p>
+    </footer>
+
+    <script>
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.title, .content, .quote, .formula-container, .formula-result, .welcome-line, .love-thy-neighbor, .smile-section').forEach(el => {
+                        el.classList.add('visible');
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
